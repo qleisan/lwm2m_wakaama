@@ -133,8 +133,8 @@ createlib:
 	# TODO: copy files that need to be modified and modify them using SED ?
 
 	# this is the library "main" file. C++
-	# ln -s $(tdir)/lwm2m_wakaama.cpp $(sdir)/lwm2m_wakaama.cpp
-	# ln -s $(tdir)/lwm2m_wakaama.h $(sdir)/lwm2m_wakaama.h
+	 ln -s ../lwm2m_wakaama.cpp $(sdir)/lwm2m_wakaama.cpp
+	 ln -s ../lwm2m_wakaama.h $(sdir)/lwm2m_wakaama.h
 
  	#ln -s $(tdir)/examples/lightclient/lightclient.c $(sdir)/lightclient.$(suffix)
 	ln -s $(tdir)/examples/lightclient/object_device.c $(sdir)/object_device.$(suffix)
@@ -208,7 +208,7 @@ buildsketch:
 uploadsketch:
 	# some magic involved that require ".ino" in the filename
 	@echo "To connect use: sudo minicom -D /dev/ttyACM0\n"
-	arduino-cli upload -p /dev/ttyACM0 --fqbn arduino:samd:mkrwifi1010 arduinoclient && sleep 2 && sudo minicom -D /dev/ttyACM0
+	arduino-cli upload -p /dev/ttyACM0 --fqbn arduino:samd:mkrwifi1010 examples/arduinoclient && sleep 2 && sudo minicom -D /dev/ttyACM0
 
 
 # make rmlib createlib
