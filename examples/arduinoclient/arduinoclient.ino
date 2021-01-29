@@ -1,3 +1,4 @@
+//#include "/home/pi/Arduino/libraries/lwm2m_wakaama/lwm2m_wakaama.h"
 #include <lwm2m_wakaama.h>
 #include "arduino_secrets.h"
 #include <WiFiNINA.h>
