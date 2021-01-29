@@ -143,7 +143,12 @@ createlib:
 	ln -s $(tdir)/examples/lightclient/object_test.c $(sdir)/object_test.$(suffix)
 
 	#ln -s $(tdir)/examples/shared/connection.c $(sdir)/connection.$(suffix)
-	ln -s $(tdir)/examples/shared/platform.c $(sdir)/platform.$(suffix)
+
+	#ln -s $(tdir)/examples/shared/platform.c $(sdir)/platform.$(suffix)
+	@echo "COPY AND MODIFY platform.c"
+	cp wakaama/examples/shared/platform.c $(sdir)/platform.$(suffix)
+	sed  -i '1i #include <Arduino.h>' $(sdir)/platform.$(suffix)
+	sed -i 's/return time(NULL);/long int mytime=0;mytime=millis()\/1000;Serial.print("QLEISAN - time: ");Serial.println(mytime);/' $(sdir)/platform.$(suffix)
 
 	#ln -s $(tdir)/examples/shared/connection.h $(sdir)/connection.h
 	ln -s $(tdir)/examples/shared/commandline.h $(sdir)/commandline.h
@@ -182,7 +187,12 @@ createlib:
 	ln -s $(tdir)/core/management.c $(sdir)/management.$(suffix)
 
 	ln -s $(tdir)/core/internals.h $(sdir)/internals.h
-	ln -s $(tdir)/core/liblwm2m.h $(sdir)/liblwm2m.h
+	
+	#ln -s $(tdir)/core/liblwm2m.h $(sdir)/liblwm2m.h
+	@echo "COPY AND MODIFY liblwm2m.h"
+	cp wakaama/core/liblwm2m.h $(sdir)/liblwm2m.h
+	sed  -i '1i #define LWM2M_SUPPORT_SENML_JSON' $(sdir)/liblwm2m.h
+	sed  -i '2i #define LWM2M_CLIENT_MODE' $(sdir)/liblwm2m.h
 
 	mkdir $(sdir)/er-coap-13
 	#ln -s ../$(tdir)/core/er-coap-13/er-coap-13.c $(sdir)/er-coap-13/er-coap-13.$(suffix)
@@ -200,7 +210,8 @@ buildsketch:
 	# arduino-cli compile --fqbn arduino:samd:mkrwifi1010 arduinoclient --verbose
 	# arduino-cli compile --build-property build.extra_flags=-DAPABEPA=2 --fqbn arduino:samd:mkrwifi1010 arduinoclient --verbose
 	## TODO: need to pass more flags, at least "LWM2M_SUPPORT_SENML_JSON"
-	arduino-cli compile --build-property compiler.cpp.extra_flags=-DLWM2M_CLIENT_MODE \
+	#arduino-cli compile --build-property compiler.cpp.extra_flags=-DLWM2M_CLIENT_MODE
+	arduino-cli compile \
 	--fqbn arduino:samd:mkrwifi1010 \
 	examples/arduinoclient \
 	--verbose
