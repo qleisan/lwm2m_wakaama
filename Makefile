@@ -94,16 +94,15 @@ buildsketch:
 	## TODO: need to pass more flags, at least "LWM2M_SUPPORT_SENML_JSON"
 	#arduino-cli compile --build-property compiler.cpp.extra_flags=-DLWM2M_CLIENT_MODE
 	arduino-cli compile \
-	--fqbn arduino:samd:mkrwifi1010 \
+	--fqbn arduino:samd:nano_33_iot \
 	examples/arduinoclient \
 	--verbose
 	
 uploadsketch:
 	# some magic involved that require ".ino" in the filename
 	@echo "To connect use: sudo minicom -D /dev/ttyACM0\n"
-	arduino-cli upload -p /dev/ttyACM0 --fqbn arduino:samd:mkrwifi1010 examples/arduinoclient && sleep 2 && sudo minicom -D /dev/ttyACM0
-
-
+	#arduino-cli upload -p /dev/ttyACM0 --fqbn arduino:samd:mkrwifi1010 examples/arduinoclient && sleep 2 && sudo minicom -D /dev/ttyACM0
+	arduino-cli upload -p /dev/ttyACM0 --fqbn arduino:samd:nano_33_iot examples/arduinoclient && sleep 2 && sudo minicom -D /dev/ttyACM0
 
 release:
 	git stash
