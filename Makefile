@@ -107,11 +107,12 @@ uploadsketch:
 release:
 	git stash
 	git checkout master
-	git status -s
+	rm -rf src
 	mv src_deref src
 	git checkout dev -- Readme.txt library.properties
 	git add Readme.txt library.properties
-	git add -A src examples
+	git add -A src
+	git add examples/arduinoclient/arduinoclient.ino
 	git commit -m "Automated commit"
 	git checkout dev
 	git stash pop
