@@ -127,6 +127,7 @@ suffix=cpp
 rmlib:
 	rm -rf /home/pi/Arduino/libraries/lwm2m_wakaama/src
 	rm -rf /tmp/arduino-*
+	rm -rf src_deref
 createlib:
 	mkdir -p /home/pi/Arduino/libraries/lwm2m_wakaama/src
 
@@ -222,6 +223,30 @@ uploadsketch:
 	arduino-cli upload -p /dev/ttyACM0 --fqbn arduino:samd:mkrwifi1010 examples/arduinoclient && sleep 2 && sudo minicom -D /dev/ttyACM0
 
 
+
+release:
+	git stash
+	git checkout master
+	git status -s
+	mv src_deref src
+	git checkout dev -- Readme.txt library.properties
+	git add Readme.txt library.properties
+	git add -A src examples
+	git commit -m "Automated commit"
+	git checkout dev
+	git stash pop
+
+dereference:
+	rm -rf src_deref
+	cp -r -L src src_deref
+	rm -rf src
+
+### BUILD & RUN
 # make rmlib createlib
 # make buildsketch
 # make uploadsketch
+
+### COMMIT TO MASTER
+# make rmlib createlib
+# make dereference
+# make release
