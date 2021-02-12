@@ -77,23 +77,20 @@ uploadsketch:
 	#arduino-cli upload -p /dev/ttyACM0 --fqbn arduino:samd:mkrwifi1010 examples/arduinoclient && sleep 2 && sudo minicom -D /dev/ttyACM0
 	arduino-cli upload -p /dev/ttyACM0 --fqbn arduino:samd:nano_33_iot examples/arduinoclient && sleep 2 && sudo minicom -D /dev/ttyACM0
 
-release:
+commitmaster:
+	rm -rf src_deref
+	cp -r -L src src_deref
+	rm -rf src
 	git stash
 	git checkout master
 	rm -rf src
 	mv src_deref src
-	git checkout dev -- Readme.txt library.properties
-	git add Readme.txt library.properties
-	git add -A src
-	git add examples/arduinoclient/arduinoclient.ino
+	git checkout dev -- Readme.txt library.properties examples/arduinoclient/arduinoclient.ino
+	git add Readme.txt library.properties examples/arduinoclient/arduinoclient.ino
+	git add src
 	git commit -m "Automated commit"
 	git checkout dev
 	git stash pop
-
-dereference:
-	rm -rf src_deref
-	cp -r -L src src_deref
-	rm -rf src
 
 ### BUILD & RUN
 # make rmlib createlib
@@ -102,5 +99,4 @@ dereference:
 
 ### COMMIT TO MASTER
 # make rmlib createlib
-# make dereference
-# make release
+# make commitmaster
