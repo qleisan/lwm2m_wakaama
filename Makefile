@@ -1,7 +1,3 @@
-#TODO fix issues (see below)
-sdir=./src
-tdir=../wakaama
-
 #suffix=c
 suffix=cpp
 
@@ -10,82 +6,59 @@ rmlib:
 	rm -rf /tmp/arduino-*
 	rm -rf src_deref
 createlib:
-	# mkdir -p /home/pi/Arduino/libraries/lwm2m_wakaama/src/examples/lightclient
-	# ln -s ../wakaama/core src/core
-	# ln -s ../wakaama/coap src/coap
-	# ln -s ../wakaama/data src/data
-	# ln -s ../../../wakaama/examples/lightclient/object_device.c src/examples/lightclient/object_device.c
-	# ln -s ../../../wakaama/examples/lightclient/object_security.c src/examples/lightclient/object_security.c
-	# ln -s ../../../wakaama/examples/lightclient/object_server.c src/examples/lightclient/object_server.c
-	# ln -s ../../../wakaama/examples/lightclient/object_test.c src/examples/lightclient/object_test.c
-	# ln -s ../wakaama/include src/include
-
 	# NEED TO FLATTEN DIR STRUCTURE FROM WAKAAMA SINCE ARDUINO DON'T USE THE CMAKE FILES AND WILL NOT FIND INCLUDE FILES OTHERWISE
 	# TODO: remove absolute path
 	mkdir -p /home/pi/Arduino/libraries/lwm2m_wakaama/src/er-coap-13
 
-
-
-	# TODO: copy files that need to be modified and modify them using SED ?
-
 	# this is the library "main" file. C++
-	 ln -s ../lwm2m_wakaama.cpp $(sdir)/lwm2m_wakaama.cpp
-	 ln -s ../lwm2m_wakaama.h $(sdir)/lwm2m_wakaama.h
+	 ln -s ../lwm2m_wakaama.cpp src/lwm2m_wakaama.cpp
+	 ln -s ../lwm2m_wakaama.h src/lwm2m_wakaama.h
 
- 	#ln -s $(tdir)/examples/lightclient/lightclient.c $(sdir)/lightclient.$(suffix)
-	ln -s $(tdir)/examples/lightclient/object_device.c $(sdir)/object_device.$(suffix)
-	ln -s $(tdir)/examples/lightclient/object_security.c $(sdir)/object_security.$(suffix)
-	ln -s $(tdir)/examples/lightclient/object_server.c $(sdir)/object_server.$(suffix)
-	ln -s $(tdir)/examples/lightclient/object_test.c $(sdir)/object_test.$(suffix)
+ 	#ln -s ../wakaama/examples/lightclient/lightclient.c src/lightclient.$(suffix)
+	ln -s ../wakaama/examples/lightclient/object_device.c src/object_device.$(suffix)
+	ln -s ../wakaama/examples/lightclient/object_security.c src/object_security.$(suffix)
+	ln -s ../wakaama/examples/lightclient/object_server.c src/object_server.$(suffix)
+	ln -s ../wakaama/examples/lightclient/object_test.c src/object_test.$(suffix)
 
-	#ln -s $(tdir)/examples/shared/connection.c $(sdir)/connection.$(suffix)
-
-	#ln -s $(tdir)/examples/shared/platform.c $(sdir)/platform.$(suffix)
+	#ln -s ../wakaama/examples/shared/platform.c src/platform.$(suffix)
 	@echo "COPY AND MODIFY platform.c"
-	cp wakaama/examples/shared/platform.c $(sdir)/platform.$(suffix)
-	sed  -i '1i #include <Arduino.h>' $(sdir)/platform.$(suffix)
-	sed -i 's/return time(NULL);/long int mytime=0;mytime=millis()\/1000;Serial.print("QLEISAN - time: ");Serial.println(mytime);/' $(sdir)/platform.$(suffix)
+	cp wakaama/examples/shared/platform.c src/platform.$(suffix)
+	sed  -i '1i #include <Arduino.h>' src/platform.$(suffix)
+	sed -i 's/return time(NULL);/long int mytime=0;mytime=millis()\/1000;Serial.print("QLEISAN - time: ");Serial.println(mytime);/' src/platform.$(suffix)
 
-	#ln -s $(tdir)/examples/shared/connection.h $(sdir)/connection.h
-	ln -s $(tdir)/examples/shared/commandline.h $(sdir)/commandline.h
-
-	ln -s $(tdir)/coap/block.c $(sdir)/block.$(suffix)
-
-	ln -s $(tdir)/data/data.c $(sdir)/data.$(suffix)
-	ln -s $(tdir)/data/json_common.c $(sdir)/json_common.$(suffix)
-
-	ln -s $(tdir)/core/liblwm2m.c $(sdir)/liblwm2m.$(suffix)
-	ln -s $(tdir)/core/list.c $(sdir)/list.$(suffix)
-	ln -s $(tdir)/core/objects.c $(sdir)/objects.$(suffix)
-	ln -s $(tdir)/core/observe.c $(sdir)/observe.$(suffix)
-	ln -s $(tdir)/core/discover.c $(sdir)/discover.$(suffix)
+	#ln -s ../wakaama/examples/shared/connection.c src/connection.$(suffix)
+	#ln -s ../wakaama/examples/shared/connection.h src/connection.h
+	ln -s ../wakaama/examples/shared/commandline.h src/commandline.h
 
 
-	ln -s $(tdir)/core/packet.c $(sdir)/packet.$(suffix)
+	ln -s ../wakaama/data/data.c src/data.$(suffix)
+	ln -s ../wakaama/data/json_common.c src/json_common.$(suffix)
+	ln -s ../wakaama/data/senml_json.c src/senml_json.$(suffix)
 
-	ln -s $(tdir)/core/registration.c $(sdir)/registration.$(suffix)
+	ln -s ../wakaama/core/liblwm2m.c src/liblwm2m.$(suffix)
+	ln -s ../wakaama/core/list.c src/list.$(suffix)
+	ln -s ../wakaama/core/objects.c src/objects.$(suffix)
+	ln -s ../wakaama/core/observe.c src/observe.$(suffix)
+	ln -s ../wakaama/core/discover.c src/discover.$(suffix)
+	ln -s ../wakaama/core/packet.c src/packet.$(suffix)
+	ln -s ../wakaama/core/registration.c src/registration.$(suffix)
+	ln -s ../wakaama/core/uri.c src/uri.$(suffix)
+	ln -s ../wakaama/core/utils.c src/utils.$(suffix)
+	ln -s ../wakaama/core/management.c src/management.$(suffix)
 
-	ln -s $(tdir)/data/senml_json.c $(sdir)/senml_json.$(suffix)
-	ln -s $(tdir)/coap/transaction.c $(sdir)/transaction.$(suffix)
+	ln -s ../wakaama/core/internals.h src/internals.h
 
-	ln -s $(tdir)/core/uri.c $(sdir)/uri.$(suffix)
-	ln -s $(tdir)/core/utils.c $(sdir)/utils.$(suffix)
-	ln -s $(tdir)/core/management.c $(sdir)/management.$(suffix)
-
-	ln -s $(tdir)/core/internals.h $(sdir)/internals.h
+	ln -s ../wakaama/coap/block.c src/block.$(suffix)
+	ln -s ../wakaama/coap/transaction.c src/transaction.$(suffix)
 	
-	#ln -s $(tdir)/core/liblwm2m.h $(sdir)/liblwm2m.h
+	#ln -s ../wakaama/core/liblwm2m.h src/liblwm2m.h
 	@echo "COPY AND MODIFY liblwm2m.h"
-	cp wakaama/include/liblwm2m.h $(sdir)/liblwm2m.h
-	sed  -i '1i #define LWM2M_SUPPORT_SENML_JSON' $(sdir)/liblwm2m.h
-	sed  -i '2i #define LWM2M_CLIENT_MODE' $(sdir)/liblwm2m.h
+	cp wakaama/include/liblwm2m.h src/liblwm2m.h
+	sed  -i '1i #define LWM2M_SUPPORT_SENML_JSON' src/liblwm2m.h
+	sed  -i '2i #define LWM2M_CLIENT_MODE' src/liblwm2m.h
 
-	ln -s ../$(tdir)/coap/er-coap-13/er-coap-13.c $(sdir)/er-coap-13/er-coap-13.$(suffix)
-
-	ln -s ../$(tdir)/coap/er-coap-13/er-coap-13.h $(sdir)/er-coap-13/er-coap-13.h
-#	ln -s $(tdir)/core/er-coap-13/er-coap-13.c $(sdir)/er-coap-13.$(suffix)
-#	ln -s $(tdir)/core/er-coap-13/er-coap-13.h $(sdir)/er-coap-13.h
-#	ln -s library.properties ../library.properties
+	ln -s ../../wakaama/coap/er-coap-13/er-coap-13.c src/er-coap-13/er-coap-13.$(suffix)
+	ln -s ../../wakaama/coap/er-coap-13/er-coap-13.h src/er-coap-13/er-coap-13.h
 
 
 buildsketch:
