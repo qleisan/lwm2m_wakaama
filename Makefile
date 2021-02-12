@@ -49,12 +49,7 @@ createlib:
 	#ln -s $(tdir)/examples/shared/connection.h $(sdir)/connection.h
 	ln -s $(tdir)/examples/shared/commandline.h $(sdir)/commandline.h
 
-	#ln -s $(tdir)/coap/block.c $(sdir)/block.$(suffix)
-	@echo "COPY AND MODIFY block.c"
-	cp wakaama/coap/block.c $(sdir)/block.$(suffix)
-	sed -i 's/lwm2m_block_data_t \* blockData = lwm2m_malloc(sizeof(lwm2m_block_data_t));/lwm2m_block_data_t * blockData = (lwm2m_block_data_t *) lwm2m_malloc(sizeof(lwm2m_block_data_t));/' $(sdir)/block.$(suffix)
-	sed -i 's/uint8_t \* buf = lwm2m_malloc(length);/uint8_t * buf = (uint8_t *) lwm2m_malloc(length);/' $(sdir)/block.$(suffix)
-	sed -i 's/blockData->blockBuffer = lwm2m_malloc(blockData->blockBufferSize);/blockData->blockBuffer = (uint8_t *) lwm2m_malloc(blockData->blockBufferSize);/' $(sdir)/block.$(suffix)
+	ln -s $(tdir)/coap/block.c $(sdir)/block.$(suffix)
 
 	ln -s $(tdir)/data/data.c $(sdir)/data.$(suffix)
 	ln -s $(tdir)/data/json_common.c $(sdir)/json_common.$(suffix)
@@ -66,16 +61,9 @@ createlib:
 	ln -s $(tdir)/core/discover.c $(sdir)/discover.$(suffix)
 
 
-	# ln -s $(tdir)/core/packet.c $(sdir)/packet.$(suffix)
-	@echo "COPY AND MODIFY packet.c"
-	cp wakaama/core/packet.c $(sdir)/packet.$(suffix)
-	sed -i 's/lwm2m_transaction_t \* clone = transaction_new(transaction->peerH, message->code, NULL, NULL, nextMID, message->token_len, message->token);/lwm2m_transaction_t * clone = transaction_new(transaction->peerH, (coap_method_t) message->code, NULL, NULL, nextMID, message->token_len, message->token);/' $(sdir)/packet.$(suffix)
-	sed -i 's/message = transaction->message;/message = (coap_packet_t *) transaction->message;/g' $(sdir)/packet.$(suffix)
+	ln -s $(tdir)/core/packet.c $(sdir)/packet.$(suffix)
 
-	#ln -s $(tdir)/core/registration.c $(sdir)/registration.$(suffix)
-	@echo "COPY AND MODIFY registration.c"
-	cp wakaama/core/registration.c $(sdir)/registration.$(suffix)
-	sed -i 's/registration_data_t \* dataP = lwm2m_malloc(sizeof(registration_data_t));/registration_data_t * dataP = (registration_data_t *) lwm2m_malloc(sizeof(registration_data_t));/g' $(sdir)/registration.$(suffix)
+	ln -s $(tdir)/core/registration.c $(sdir)/registration.$(suffix)
 
 	ln -s $(tdir)/data/senml_json.c $(sdir)/senml_json.$(suffix)
 	ln -s $(tdir)/coap/transaction.c $(sdir)/transaction.$(suffix)
@@ -92,10 +80,7 @@ createlib:
 	sed  -i '1i #define LWM2M_SUPPORT_SENML_JSON' $(sdir)/liblwm2m.h
 	sed  -i '2i #define LWM2M_CLIENT_MODE' $(sdir)/liblwm2m.h
 
-	#ln -s ../$(tdir)/coap/er-coap-13/er-coap-13.c $(sdir)/er-coap-13/er-coap-13.$(suffix)
-	@echo "COPY AND MODIFY er-coap-13.c"
-	cp wakaama/coap/er-coap-13/er-coap-13.c $(sdir)/er-coap-13/er-coap-13.$(suffix)
-	sed -i 's/output = lwm2m_malloc(len + 1);/output = (char *) lwm2m_malloc(len + 1);/' $(sdir)/er-coap-13/er-coap-13.$(suffix)
+	ln -s ../$(tdir)/coap/er-coap-13/er-coap-13.c $(sdir)/er-coap-13/er-coap-13.$(suffix)
 
 	ln -s ../$(tdir)/coap/er-coap-13/er-coap-13.h $(sdir)/er-coap-13/er-coap-13.h
 #	ln -s $(tdir)/core/er-coap-13/er-coap-13.c $(sdir)/er-coap-13.$(suffix)
