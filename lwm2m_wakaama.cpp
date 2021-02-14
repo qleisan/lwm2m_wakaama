@@ -20,6 +20,8 @@ extern char * get_server_uri(lwm2m_object_t * objectP, uint16_t secObjInstID);
 extern lwm2m_object_t * get_test_object(void);
 // extern void free_test_object(lwm2m_object_t * object);
 
+extern lwm2m_object_t * get_temp_object(void);
+
 //#define MAX_PACKET_SIZE 1024
 
 
@@ -243,7 +245,7 @@ void print_state(lwm2m_context_t * lwm2mH)
 //TODO: this should not be extern - passed as function poiner
 extern void A(uint8_t * buffer, size_t length);
 
-#define OBJ_COUNT 4
+#define OBJ_COUNT 5
 
 // outside class...
 void (*fun_p)(uint8_t * buffer, size_t length);
@@ -286,6 +288,13 @@ WakaamaClient::WakaamaClient(void (*f)(uint8_t * buffer, size_t length))
     if (NULL == objArray[3])
     {
       Serial.println("Failed to create Test object");
+      goto error;
+    }
+
+    objArray[4] = get_temp_object();
+    if (NULL == objArray[4])
+    {
+      Serial.println("Failed to create temperature object");
       goto error;
     }
 

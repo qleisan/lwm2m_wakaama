@@ -20,6 +20,9 @@ createlib:
 	ln -s ../wakaama/examples/lightclient/object_server.c src/object_server.$(suffix)
 	ln -s ../wakaama/examples/lightclient/object_test.c src/object_test.$(suffix)
 
+	# new 3311 object
+	ln -s ../object_temperature.cpp src/object_temperature.cpp
+
 	#ln -s ../wakaama/examples/shared/platform.c src/platform.$(suffix)
 	@echo "COPY AND MODIFY platform.c"
 	cp wakaama/examples/shared/platform.c src/platform.$(suffix)
