@@ -7,8 +7,7 @@
 #include <string.h>
 #include <ctype.h>
 
-#define TEMP_OBJECT_ID  3311
-//#define TEMP_OBJECT_ID  3303
+#define LIGHTCONTROL_OBJECT_ID  3311
 
 /*
  * Multiple instance objects can use userdata to store data that will be shared between the different instances.
@@ -80,7 +79,7 @@ static uint8_t prv_read(uint16_t instanceId,
 }
 
 
-lwm2m_object_t * get_temp_object(void)
+lwm2m_object_t * get_lightcontrol_object(void)
 {
     lwm2m_object_t * testObj;
 
@@ -93,7 +92,7 @@ lwm2m_object_t * get_temp_object(void)
 
         memset(testObj, 0, sizeof(lwm2m_object_t));
 
-        testObj->objID = TEMP_OBJECT_ID;
+        testObj->objID = LIGHTCONTROL_OBJECT_ID;
         targetP = (prv_instance_t *)lwm2m_malloc(sizeof(prv_instance_t));
         if (NULL == targetP) return NULL;
         memset(targetP, 0, sizeof(prv_instance_t));

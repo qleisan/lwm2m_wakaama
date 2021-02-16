@@ -20,7 +20,7 @@ extern char * get_server_uri(lwm2m_object_t * objectP, uint16_t secObjInstID);
 extern lwm2m_object_t * get_test_object(void);
 // extern void free_test_object(lwm2m_object_t * object);
 
-extern lwm2m_object_t * get_temp_object(void);
+extern lwm2m_object_t * get_lightcontrol_object(void);
 
 //#define MAX_PACKET_SIZE 1024
 
@@ -291,7 +291,7 @@ WakaamaClient::WakaamaClient(void (*f)(uint8_t * buffer, size_t length))
       goto error;
     }
 
-    objArray[4] = get_temp_object();
+    objArray[4] = get_lightcontrol_object();
     if (NULL == objArray[4])
     {
       Serial.println("Failed to create temperature object");

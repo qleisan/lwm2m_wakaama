@@ -7,8 +7,8 @@
 
 // Settings. ---------------------------------------------------------------------
 
-//IPAddress address(192, 168, 0, 23);     // !!! Must be updated to server IP !!!
-IPAddress address(23, 97, 187, 154);    // leshan.eclipseprojects.io (23.97.187.154)
+IPAddress address(192, 168, 0, 23);     // !!! Must be updated to server IP !!!
+//IPAddress address(23, 97, 187, 154);    // leshan.eclipseprojects.io (23.97.187.154)
 
 const unsigned int remote_port = 5683;
 const unsigned int local_port = 56830;
